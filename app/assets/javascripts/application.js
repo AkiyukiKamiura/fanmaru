@@ -10,17 +10,57 @@ ELEMENT.locale(ELEMENT.lang.ja)
 
 window.tradeChart = Vue.extend({
   template: "\
-    <el-card shadow='hover'>\
+    <el-card class='trade-chart' shadow='hover'>\
       <div slot='header' class='clearfix'>\
-        <span>Statistics Chart</span>\
+        <span>GENERAL STATISTIC</span>\
+      </div>\
+      <el-row>\
+        <el-col :span='6' style='height: 100px;'>\
+          <div class='currencies'>USD/JPY</div>\
+        </el-col>\
+        <el-col :span='6' style='height: 70px;'>\
+          <div class='values'>{{ this.timeSeries[0]['close'] }}</div>\
+        </el-col>\
+        <el-col :span='6' style='height: 70px;'>\
+          <div class='values'>あれ</div>\
+        </el-col>\
+        <el-col :span='6' style='height: 70px;'>\
+          <div class='values'>あれ</div>\
+        </el-col>\
+      </el-row>\
+      <div class='block'>\
+        <el-cascader expand-trigger='hover' :options='analyticsOptions' @change='handleSelectAnalytics'></el-cascader>\
       </div>\
       <div id='myChart' style='height: 800px;'></div>\
-      <div>{{ this.timeSeries }}</div>\
     </el-card>",
   data: function() {
     return {
       text: "あいうえお",
-      timeSeries: {}
+      timeSeries: {},
+      showMovingAverage: false,
+      movingAverageType: 'simple', // type: simple, exp
+      movingAverageWindowLen: 21,
+      analyticsOptions: [{
+        value: 'moving_average',
+        label: '移動平均線',
+        children: [{
+          value: 'simple',
+          label: '単純'
+        }, {
+          value: 'exp',
+          label: '指数'
+        }]
+      }, {
+        value: 'bollinger_band',
+        label: 'ボリンジャーバンド',
+        children: [{
+          value: 'sigma-1',
+          label: '1σ'
+        }, {
+          value: 'sigma-2',
+          label: '2σ'
+        }]
+      }]
     }
   },
   mounted: function () {
@@ -30,6 +70,9 @@ window.tradeChart = Vue.extend({
     this.drawChart()
   },
   methods: {
+    handleSelectAnalytics: function (value) {
+      console.log(value)
+    },
     drawChart: function () {
       var trace1 = {
         increasing: {line: {color: '#17BECF'}},

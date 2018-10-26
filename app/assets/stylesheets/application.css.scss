@@ -43,6 +43,34 @@ body {
   vertical-align: middle;
 }
 
+.main-title-area {
+  padding: 10px;
+  font-size: 20px;
+  color: #CCCCCC;
+}
+
 .title-area {
 
+}
+
+.trade-chart {
+
+}
+
+.trade-chart .el-card__header {
+  background-color: #F9FAFC;
+  color: #707070;
+}
+
+.trade-chart .currencies {
+  font-size: 3vw;
+  color: #707070;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.trade-chart .values {
+  height: 100%;
+  border-left: 1px solid #CCCCCC;
+  text-align: center;
 }
