@@ -1,0 +1,17 @@
+.sidebar-sticky
+  .row
+    .col-3.p-0.sidebar-icons
+      .sidebar-title
+        %i.fa.fa-signal.fa-2x
+      %ul.nav.flex-column
+        %li.nav-item.p-1{align: "center"}
+          %b X
+        %li.nav-item.p-1{align: "center"}
+          %b Y
+    .col-9.p-0.sidebar-menu
+      .sidebar-title
+        %h4{align: "center"} canmaru23
+      %ul.nav.flex-column
+        - for item in 'ABCDEFGHIJKLMN'.split('')
+          %li.nav-item.p-1{align: "center"}
+            %b #{item}

@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title TradeSimulator
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+
+  %body
+    .container-fluid
+      .row
+        .col-md-2.d-none.d-md-block.bg-sidebar.sidebar
+          = render "layouts/sidebar"
+        .col-md-10.bg-light
+          = yield
+
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/element-ui/2.3.9/theme-chalk/index.css'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/element-ui/2.3.9/index.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/element-ui/2.3.9/locale/ja.min.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'
+    = javascript_include_tag 'https://cdn.plot.ly/plotly-latest.min.js'
+    = javascript_include_tag 'application'
+    = yield(:javascripts)

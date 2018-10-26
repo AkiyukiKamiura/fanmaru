@@ -1,0 +1,2 @@
+class FxTimeseriesMin < ApplicationRecord
+end
