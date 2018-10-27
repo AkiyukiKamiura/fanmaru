@@ -27,6 +27,11 @@ body {
 
 
 // --------------- layout/sidebar
+.sidebar-sticky,
+.sidebar-container {
+  height: 100%;
+}
+
 .sidebar-icons {
   background-color: #29333C;
   color: #9CEDE7;
@@ -95,6 +100,12 @@ body {
 .sidebar-menu .menu-item.selected a{
   background-color: #F9FAFC;
   color: #707070;
+}
+
+.sidebar-menu .menu-partition {
+  background-color: #52757C;
+  font-size: 12px;
+  padding: 2px 10px;
 }
 
 // --------------- index.html
