@@ -88,13 +88,13 @@ body {
   display:table-cell;
   text-align: center;
   vertical-align: middle;
-  color: #707070;
+  color: white;
   text-decoration: none;
 }
 
-.sidebar-menu .selected {
+.sidebar-menu .menu-item.selected a{
   background-color: #F9FAFC;
-  color: black;
+  color: #707070;
 }
 
 // --------------- index.html

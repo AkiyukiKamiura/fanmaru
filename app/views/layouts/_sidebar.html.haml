@@ -15,10 +15,15 @@
         %a{href: '/'}
           %h4{align: "center"} FanmaruX
       %ul.nav.flex-column
-        %li.nav-item.p-1.menu-item.selected{align: "center"}
+        %li.nav-item.menu-item.selected{align: "center"}
           %a{href: '#'}
             %i.fa.fa-line-chart
             Dashboard
-        - for item in 'ABCDEFGHIJKLMN'.split('')
-          %li.nav-item.p-1.menu-item{align: "center"}
-            %p #{item}
+        %li.nav-item.menu-item{align: "center"}
+          %a{href: '#'}
+            %i.fa.fa-tasks
+            Methods
+        %li.nav-item.menu-item{align: "center"}
+          %a{href: '#'}
+            %i.fa.fa-newspaper-o
+            News
