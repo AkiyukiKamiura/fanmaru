@@ -2,18 +2,23 @@
   .row
     .col-3.p-0.sidebar-icons
       .sidebar-title
-        %i.fa.fa-signal.fa-2x
+        %i.fa.fa-at.fa-2x
       %ul.nav.flex-column
-        %li.nav-item.p-1{align: "center"}
-          %b X
-        %li.nav-item.p-1{align: "center"}
-          %b Y
+        %li.nav-item.p-1.icons-item.selected{align: "center"}
+          %a{href: '/'}
+            %b FX
+        %li.nav-item.p-1.icons-item{align: "center"}
+          %a{href: '/'}
+            %b ST
     .col-9.p-0.sidebar-menu
       .sidebar-title
-        %h4{align: "center"} FAMNMARU
+        %a{href: '/'}
+          %h4{align: "center"} FanmaruX
       %ul.nav.flex-column
-        %li.nav-item.p-1{align: "center"}
-          %h5 Dashboard
+        %li.nav-item.p-1.menu-item.selected{align: "center"}
+          %a{href: '#'}
+            %i.fa.fa-line-chart
+            Dashboard
         - for item in 'ABCDEFGHIJKLMN'.split('')
-          %li.nav-item.p-1{align: "center"}
-            %b #{item}
+          %li.nav-item.p-1.menu-item{align: "center"}
+            %p #{item}

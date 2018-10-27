@@ -3,4 +3,19 @@
   %div.main-title-area FANMARU DASHBOARD
 
 #trade-app
-  %trade-chart
+  %el-card.trade-chart{shadow: 'hover'}
+    %div.clearfix{slot:'header'}
+      %span GENERAL STATISTIC
+    %el-row
+      %el-col{':span': '6', style: 'height: 100px;'}
+        %div.currencies USD/JPY
+      %el-col{':span': '6', style: 'height: 100px;'}
+        %div.values scale
+      %el-col{':span': '6', style: 'height: 100px;'}
+        %div.values last
+      %el-col{':span': '6', style: 'height: 100px;'}
+        %div.values behaviour
+    %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}
+    %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
+    %div.chart-container
+      %canvas#myChart{'v-if': 'this.timeSeries', width: '300', height: '300'}

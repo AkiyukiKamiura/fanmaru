@@ -25,9 +25,11 @@ body {
   margin: 0;
 }
 
+
+// --------------- layout/sidebar
 .sidebar-icons {
   background-color: #29333C;
-  color: white;
+  color: #9CEDE7;
 }
 
 .sidebar-menu {
@@ -36,13 +38,66 @@ body {
 }
 
 .sidebar-title {
+  width: 100%;
   padding: 10px;
-  height: 50px;
-  text-align: center;
-  align-items: center;
-  vertical-align: middle;
+  height: 75px;
+  display: table;
 }
 
+.sidebar-title i {
+  color: #CCCCCC;
+}
+
+.sidebar-title a {
+  color: white;
+}
+
+.sidebar-title a,
+.sidebar-title i {
+  display:table-cell;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.sidebar-icons .icons-item {
+  height: 45px;
+  width: 100%;
+  display: table;
+}
+
+.sidebar-icons .icons-item a {
+  display:table-cell;
+  text-align: center;
+  vertical-align: middle;
+  color: #9CEDE7;
+  text-decoration: none;
+}
+
+.sidebar-icons .selected {
+  background-color: #5C8189;
+}
+
+.sidebar-menu .menu-item {
+  height: 45px;
+  width: 100%;
+  display: table;
+}
+
+.sidebar-menu .menu-item a{
+  display:table-cell;
+  text-align: center;
+  vertical-align: middle;
+  color: #707070;
+  text-decoration: none;
+}
+
+.sidebar-menu .selected {
+  background-color: #F9FAFC;
+  color: black;
+}
+
+// --------------- index.html
 .main-title-area {
   padding: 10px;
   font-size: 20px;
@@ -71,6 +126,16 @@ body {
 
 .trade-chart .values {
   height: 100%;
+  font-size: 3vw;
+  color: #707070;
   border-left: 1px solid #CCCCCC;
   text-align: center;
+}
+
+.trade-chart .values.last-updated {
+  font-size: 0.01vw;
+}
+
+.chart-container {
+
 }
