@@ -143,10 +143,10 @@ body {
   text-align: center;
 }
 
-.trade-chart .values.last-updated {
-  font-size: 0.01vw;
+.trade-chart .values .description {
+  font-size: 1vw;
 }
 
 .chart-container {
-
+  height: 500px;
 }

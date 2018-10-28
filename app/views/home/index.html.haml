@@ -1,6 +1,4 @@
-
-%div.title-bar{align: "center"}
-  %div.main-title-area FANMARU DASHBOARD
+= render 'layouts/title_area'
 
 #trade-app
   %el-card.trade-chart{shadow: 'hover'}
@@ -8,11 +6,19 @@
       %span GENERAL STATISTIC
     %el-row
       %el-col{':span': '6', style: 'height: 100px;'}
-        %div.currencies USD/JPY
+        %div.currencies {{ this.from_currency }}/{{ this.to_currency }}
+        %div
+          scale
+          %el-cascader{'size': 'mini', ':options': 'scaleOptions', '@change': 'handleSelectScales'}
       %el-col{':span': '6', style: 'height: 100px;'}
-        %div.values scale
+        %div.values
+          {{ lastValue }}
+          %div.description{'v-if': 'lastValue > prevLastValue', style: 'color: blue;'}
+            %i.fa.fa-arrow-up
+          %div.description{'v-if': 'lastValue < prevLastValue', style: 'color: red'}
+            %i.fa.fa-arrow-down {{ roundUnderPoint(prevLastValue - lastValue, 3) }}
       %el-col{':span': '6', style: 'height: 100px;'}
-        %div.values last
+        %div.values
       %el-col{':span': '6', style: 'height: 100px;'}
         %div.values behaviour
     %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}

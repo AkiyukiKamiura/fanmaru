@@ -4,6 +4,9 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require chartjs-chart-financial/docs/moment
+//= require chartjs-chart-financial/docs/Chart
+//= require chartjs-chart-financial/docs/Chart.Financial
 // require_tree .
 
 ELEMENT.locale(ELEMENT.lang.ja)
@@ -14,6 +17,32 @@ window.tradeApp = new Vue({
   },
   data: function() {
     return {
+      from_currency: 'USD',
+      to_currency: 'JPY',
+      chartScale: 'min_1',
+      lastValue: '',
+      prevLastValue: '',
+      scaleOptions: [
+        {
+          value: 'min_1',
+          label: '1 min'
+        }, {
+          value: 'min_5',
+          label: '5 min'
+        }, {
+          value: 'min_10',
+          label: '10 min'
+        }, {
+          value: 'min_15',
+          label: '15 min'
+        }, {
+          value: 'min_30',
+          label: '30 min'
+        }, {
+          value: 'min_60',
+          label: '60 min'
+        }
+      ],
       timeSeries: {},
       showMovingAverage: false,
       movingAverageType: 'simple', // type: simple, exp
@@ -54,15 +83,39 @@ window.tradeApp = new Vue({
       chartElementId: 'myChart'
     }
   },
+  computed: {
+    chartTimeSeries: function() {
+      rst = []
+      for (let i in this.timeSeries){
+        let row = this.timeSeries[i]
+        rst.push({'o': row['open'], 'h': row['high'], 'l': row['low'], 'c': row['close'], 't': Date.parse(row['time'])})
+      }
+      return rst
+    }
+  },
   mounted: function () {
     console.log('mounted')
-    axios.get('/api/forex_timeseries/get_timeseries').then(response => { this.timeSeries = response.data })
+    axios.get('/api/forex_timeseries/get_timeseries').then(response => {
+      this.timeSeries = response.data
+      this.lastValue = response.data[response.data.length -1]['close']
+      this.prevLastValue = response.data[response.data.length -2]['close']
+    })
   },
   updated: function () {
     console.log('updated')
     this.drawChart()
   },
   methods: {
+    roundUnderPoint: function(value, precision) {
+      var digit = Math.pow(10, precision);
+      value = value * digit
+      value = Math.round(value)
+      value = value / digit
+      return value
+    },
+    handleSelectScales: function (value) {
+      console.log(value)
+    },
     handleSelectLowAnalytics: function (value) {
       console.log(value)
     },
@@ -71,43 +124,24 @@ window.tradeApp = new Vue({
     },
     drawChart: function() {
       console.log('drawChart')
-      var ctx = document.getElementById(this.chartElementId).getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'bar',
+      console.log(this.chartTimeSeries)
+      var ctx = document.getElementById('myChart').getContext('2d')
+      new Chart(ctx, {
+        type: 'candlestick',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
+          datasets: [{
+            label: 'candlestick chart',
+            data: this.chartTimeSeries,
+            fractionalDigitsCount: 2
+          }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
+          tooltips: {
+            position: 'nearest',
+            mode: 'index'
+          }
         }
-    });
+      })
     }
   }
 })
