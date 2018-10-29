@@ -1,3 +1,28 @@
 = render 'layouts/title_area'
 
-%h2 Methods/index
+#method-app
+  %div.methods-header
+    %el-button{style: "float: right; padding: 3px, 0; margin-right: 10px;", '@click': 'dialogFormVisible = true'} CREATE
+    %el-dialog{'title': 'Create a method', ':visible.sync': 'dialogFormVisible'}
+      %el-form{':model': "form"}
+        %el-form-item{'label': "Title",  ':label-width': "formLabelWidth"}
+          %el-input{'v-model': 'form.title', 'autocomplete': 'off'}
+        %el-form-item{'label': 'Description', ':label-width': "formLabelWidth"}
+          %el-input{'v-model': 'form.description', ':autosize': "{minRows: 5}", "type": "textarea"}
+      %span.dialog-footer{"slot": "footer"}
+        %el-button{"@click": "dialogFormVisible = false"} Cancel
+        %el-button{"@click": "dialogFormVisible = false", type: "primary"} Confirm
+  </span>
+  %el-row
+    %el-col{":span": '12', style: 'padding-right: 10px;'}
+      %el-card
+        %div.clearfix{slot: "header"}
+          %span Method #1
+          %el-button{style: "float: right;", icon: 'el-icon-delete', circle: true}
+          %el-button{style: "float: right; margin-right: 10px;", icon: 'el-icon-edit', circle: true}
+    %el-col{":span": '12', style: 'padding-left: 10px;'}
+      %el-card
+        %div.clearfix{slot: "header"}
+          %span Method #2
+          %el-button{style: "float: right;", icon: 'el-icon-delete', circle: true}
+          %el-button{style: "float: right; margin-right: 10px;", icon: 'el-icon-edit', circle: true}

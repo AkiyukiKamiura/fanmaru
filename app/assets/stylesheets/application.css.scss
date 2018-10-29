@@ -163,3 +163,17 @@ body {
 .footer {
   height: 50px;
 }
+
+// methods
+.methods-header {
+  height: 50px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}

@@ -2,4 +2,5 @@
   %div.col-4.offset-4{'align': 'center'}
     FANMARU DASHBOARD
   %div.col-4{'align': 'right'}
-    %i.fa.fa-user-circle-o
+    %el-popover{placement: 'bottom', title: 'Title',  trigger: "hover", width: "200", 'content': 'anonymous user'}
+      %i.fa.fa-user-circle-o{slot: "reference"}
