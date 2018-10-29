@@ -79,7 +79,8 @@ window.tradeApp = new Vue({
         }
       ],
 
-      chartElementId: 'myChart'
+      chartElementId: 'myChart',
+      myChart: '',
     }
   },
   computed: {
@@ -180,18 +181,20 @@ window.tradeApp = new Vue({
       console.log(value)
     },
     drawChart: function() {
-      console.log('drawChart')
-      console.log(this.timeSeries)
       var ctx = document.getElementById('myChart').getContext('2d')
       var container = document.getElementsByClassName('chart-container')[0]
       ctx.canvas.width = container.offsetWidth
       ctx.canvas.height = container.offsetHeight
 
-      var myChart = new Chart(ctx, {
+      if (this.myChart != '') {
+        this.myChart.destroy()
+      }
+      this.myChart = new Chart(ctx, {
         type: 'candlestick',
         data: this.chartData,
         options: this.chartOptions
       })
+
     }
   }
 })
