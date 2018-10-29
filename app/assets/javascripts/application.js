@@ -95,7 +95,9 @@ window.tradeApp = new Vue({
   },
   mounted: function () {
     console.log('mounted')
-    axios.get('/api/forex_timeseries/get_timeseries').then(response => {
+    let params = new URLSearchParams();
+    params.append('scale', this.chartScale);
+    axios.post('/api/forex_timeseries/get_timeseries', params).then(response => {
       this.timeSeries = response.data
       this.lastValue = response.data[response.data.length -1]['close']
       this.prevLastValue = response.data[response.data.length -2]['close']
@@ -126,19 +128,55 @@ window.tradeApp = new Vue({
       console.log('drawChart')
       console.log(this.chartTimeSeries)
       var ctx = document.getElementById('myChart').getContext('2d')
+      var container = document.getElementsByClassName('chart-container')[0]
+      ctx.canvas.width = container.offsetWidth
+      ctx.canvas.height = container.offsetHeight
       new Chart(ctx, {
         type: 'candlestick',
         data: {
           datasets: [{
-            label: 'candlestick chart',
+            color: {
+              up: '#0E7AC455',
+              down: '#EB214255',
+              unchanged: '#999'
+            },
+            borderColor: {
+              up: '#0E7AC455',
+              down: '#EB214255',
+              unchanged: '#999'
+            },
+            borderWidth: 1,
+            label: this.chartScale,
             data: this.chartTimeSeries,
-            fractionalDigitsCount: 2
+            fractionalDigitsCount: 3
           }]
         },
         options: {
+          responsive: true,
           tooltips: {
             position: 'nearest',
             mode: 'index'
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              distribution: 'series',
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              },
+              ticks: {
+                stepSize: 10
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Value'
+              }
+            }]
           }
         }
       })

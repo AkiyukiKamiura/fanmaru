@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   resource :news, only: ['show']
 
   namespace :api, {format: 'json'} do
-    get 'forex_timeseries/get_timeseries'
+    post 'forex_timeseries/get_timeseries'
   end
 end

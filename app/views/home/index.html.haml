@@ -25,3 +25,12 @@
     %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
     %div.chart-container
       %canvas#myChart{'v-if': 'this.timeSeries', width: '300', height: '300'}
+  %el-row{style: 'margin-top: 20px;'}
+    %el-col{':span': '12', style: 'padding-right: 10px;'}
+      %el-card.trade-chart{shadow: 'hover'}
+        %div.clearfix{slot:'header'}
+          %span METHOD - 1
+    %el-col{':span': '12', style: 'padding-left: 10px;'}
+      %el-card.trade-chart{shadow: 'hover'}
+        %div.clearfix{slot:'header'}
+          %span METHOD - 2
