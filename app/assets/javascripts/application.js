@@ -18,7 +18,7 @@ window.tradeApp = new Vue({
     return {
       from_currency: 'USD',
       to_currency: 'JPY',
-      chartScale: 'min_1',
+      chartScale: ['min_1'],
       lastValue: '',
       prevLastValue: '',
       scaleOptions: [
@@ -90,17 +90,62 @@ window.tradeApp = new Vue({
         rst.push({'o': row['open'], 'h': row['high'], 'l': row['low'], 'c': row['close'], 't': Date.parse(row['time'])})
       }
       return rst
+    },
+    chartData: function () {
+      return {
+        datasets: [{
+          type: 'candlestick',
+          color: {
+            up: '#EB214255',
+            down: '#16A6B655',
+            unchanged: '#E9872E55'
+          },
+          borderColor: {
+            up: '#EB2142',
+            down: '#16A6B6',
+            unchanged: '#E9872E'
+          },
+          borderWidth: 1.5,
+          label: this.chartScale,
+          data: this.chartTimeSeries,
+          fractionalDigitsCount: 3
+        }]
+      }
+    },
+    chartOptions: function () {
+      return {
+        responsive: true,
+        tooltips: {
+          position: 'nearest',
+          mode: 'index'
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            distribution: 'series',
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Month'
+            },
+            ticks: {
+              stepSize: 10
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Value'
+            }
+          }]
+        }
+      }
     }
   },
   mounted: function () {
     console.log('mounted')
-    let params = new URLSearchParams();
-    params.append('scale', this.chartScale);
-    axios.post('/api/forex_timeseries/get_timeseries', params).then(response => {
-      this.timeSeries = response.data
-      this.lastValue = response.data[response.data.length -1]['close']
-      this.prevLastValue = response.data[response.data.length -2]['close']
-    })
+    this.fetchTimeseries()
   },
   updated: function () {
     console.log('updated')
@@ -108,14 +153,25 @@ window.tradeApp = new Vue({
   },
   methods: {
     roundUnderPoint: function(value, precision) {
+      console.log(value)
       var digit = Math.pow(10, precision);
       value = value * digit
       value = Math.round(value)
       value = value / digit
       return value
     },
+    fetchTimeseries: function() {
+      let params = new URLSearchParams();
+      params.append('scale', this.chartScale);
+      axios.post('/api/forex_timeseries/get_timeseries', params).then(response => {
+        this.timeSeries = response.data
+        this.lastValue = response.data[response.data.length -1]['close']
+        this.prevLastValue = response.data[response.data.length -2]['close']
+      })
+    },
     handleSelectScales: function (value) {
       console.log(value)
+      this.fetchTimeseries()
     },
     handleSelectLowAnalytics: function (value) {
       console.log(value)
@@ -125,59 +181,16 @@ window.tradeApp = new Vue({
     },
     drawChart: function() {
       console.log('drawChart')
-      console.log(this.chartTimeSeries)
+      console.log(this.timeSeries)
       var ctx = document.getElementById('myChart').getContext('2d')
       var container = document.getElementsByClassName('chart-container')[0]
       ctx.canvas.width = container.offsetWidth
       ctx.canvas.height = container.offsetHeight
-      new Chart(ctx, {
+
+      var myChart = new Chart(ctx, {
         type: 'candlestick',
-        data: {
-          datasets: [{
-            color: {
-              up: '#0E7AC455',
-              down: '#EB214255',
-              unchanged: '#999'
-            },
-            borderColor: {
-              up: '#0E7AC455',
-              down: '#EB214255',
-              unchanged: '#999'
-            },
-            borderWidth: 1,
-            label: this.chartScale,
-            data: this.chartTimeSeries,
-            fractionalDigitsCount: 3
-          }]
-        },
-        options: {
-          responsive: true,
-          tooltips: {
-            position: 'nearest',
-            mode: 'index'
-          },
-          scales: {
-            xAxes: [{
-              type: 'time',
-              distribution: 'series',
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Month'
-              },
-              ticks: {
-                stepSize: 10
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Value'
-              }
-            }]
-          }
-        }
+        data: this.chartData,
+        options: this.chartOptions
       })
     }
   }

@@ -9,28 +9,31 @@
         %div.currencies {{ this.from_currency }}/{{ this.to_currency }}
         %div
           scale
-          %el-cascader{'size': 'mini', ':options': 'scaleOptions', '@change': 'handleSelectScales'}
+          %el-cascader{'size': 'mini', 'v-model': 'chartScale', ':options': 'scaleOptions', '@change': 'handleSelectScales'}
       %el-col{':span': '6', style: 'height: 100px;'}
         %div.values
           {{ lastValue }}
-          %div.description{'v-if': 'lastValue > prevLastValue', style: 'color: blue;'}
+          %div.description{'v-if': 'lastValue > prevLastValue', style: 'color: #EB2142;'}
             %i.fa.fa-arrow-up
-          %div.description{'v-if': 'lastValue < prevLastValue', style: 'color: red'}
+          %div.description{'v-if': 'lastValue < prevLastValue', style: 'color: #16A6B6;'}
             %i.fa.fa-arrow-down {{ roundUnderPoint(prevLastValue - lastValue, 3) }}
       %el-col{':span': '6', style: 'height: 100px;'}
         %div.values
+          %div.description
+            トレンド or レンジ or ショック or Unknown
       %el-col{':span': '6', style: 'height: 100px;'}
-        %div.values behaviour
-    %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}
-    %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
+        %div.values
+          %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}
+          %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
     %div.chart-container
       %canvas#myChart{'v-if': 'this.timeSeries', width: '300', height: '300'}
   %el-row{style: 'margin-top: 20px;'}
     %el-col{':span': '12', style: 'padding-right: 10px;'}
       %el-card.trade-chart{shadow: 'hover'}
         %div.clearfix{slot:'header'}
-          %span METHOD - 1
+          %span METHOD #1
     %el-col{':span': '12', style: 'padding-left: 10px;'}
       %el-card.trade-chart{shadow: 'hover'}
         %div.clearfix{slot:'header'}
-          %span METHOD - 2
+          %span METHOD #2
+  %div.footer

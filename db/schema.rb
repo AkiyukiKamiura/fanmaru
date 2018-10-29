@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_162233) do
+ActiveRecord::Schema.define(version: 2018_10_29_053318) do
 
   create_table "fx_timeseries_mins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "time"
@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(version: 2018_10_25_162233) do
     t.float "high"
     t.float "low"
     t.float "close"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
