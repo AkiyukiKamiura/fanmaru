@@ -8,6 +8,7 @@
     "chartjs-chart-financial": "chartjs/chartjs-chart-financial",
     "glup": "^1.0.14",
     "vue": "^2.5.17",
+    "vue-google-charts": "^0.3.2",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "^2.5.17"
   },

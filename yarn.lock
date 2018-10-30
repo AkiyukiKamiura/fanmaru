@@ -2317,6 +2317,11 @@ deap@^1.0.0:
   resolved "https://registry.yarnpkg.com/deap/-/deap-1.0.1.tgz#0646e9e1a095ffe8a9e404d68d1f76dcf57e66fb"
   integrity sha512-k75KYNZMvwAwes2xIPry/QTffXIchjD8QfABvvfTr80P85jv5ZcKqcoDo+vMe71nNnVnXYe8MA28weyqcf/DKw==
 
+debounce@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
+  integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
+
 debug-fabulous@0.0.X:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/debug-fabulous/-/debug-fabulous-0.0.4.tgz#fa071c5d87484685424807421ca4b16b0b1a0763"
@@ -9048,6 +9053,13 @@ vm-browserify@0.0.4:
   integrity sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
   dependencies:
     indexof "0.0.1"
+
+vue-google-charts@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/vue-google-charts/-/vue-google-charts-0.3.2.tgz#fd78c9487c25327da27e0613d78c9d9724ac4c21"
+  integrity sha512-pyNLJvjY1ZTAI91ppqGth9YaA7TA7wuotn33f7PIYkwJ4jmUbm2ZBSEkc2QaGKv8jLHkTg+gYDOmvWDTc9pAvQ==
+  dependencies:
+    debounce "^1.1.0"
 
 vue-hot-reload-api@^2.2.0:
   version "2.3.1"
