@@ -1,7 +1,7 @@
 = render 'layouts/title_area'
 
-= content_for :javascripts
- = javascript_include_tag 'methods'
+= content_for :javascripts do
+  = javascript_include_tag 'methods'
 
 #method-app
   %div.methods-header

@@ -26,8 +26,9 @@
             トレンド or レンジ or ショック or Unknown
       %el-col{':span': '6', style: 'height: 100px;'}
         %div.values
-          %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}
-          %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
+          %div
+            %el-cascader{'expand-trigger': 'hover', ':options': 'lowAnalyticsOptions', '@change': 'handleSelectLowAnalytics'}
+            %el-cascader{'expand-trigger': 'hover', ':options': 'highAnalyticsOptions', '@change': 'handleSelectHighAnalytics'}
     %div.chart-container
       %div#chart_div
       -# %canvas#myChart{'v-if': 'this.timeSeries', width: '300', height: '300'}

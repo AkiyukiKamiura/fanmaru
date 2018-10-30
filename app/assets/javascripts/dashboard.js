@@ -1,13 +1,10 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawVisualization);
 function drawVisualization () {
-  var wrapper = new google.visualization.ChartWrapper({
-    chartType: 'CandlestickChart',
-    dataTable: google.visualization.arrayToDataTable(window.tradeApp.gChartDataArray, true),
-    options: window.tradeApp.gChartOptions,
-    containerId: 'chart_div'
-  })
-  wrapper.draw();
+  var data = google.visualization.arrayToDataTable(window.tradeApp.gChartDataArray, true)
+  var options = window.tradeApp.gChartOptions
+  var chart = new google.visualization.ComboChart(document.getElementById('chart_div'))
+  chart.draw(data, options);
 }
 
 window.tradeApp = new Vue({
@@ -77,39 +74,72 @@ window.tradeApp = new Vue({
             label: 'ダウ理論'
           }]
         }
-      ],
-
-      chartElementId: 'myChart',
+      ]
     }
   },
   computed: {
+    movingAverageTimeseries: function () {
+      let rst = []
+      for (let i in this.timeSeries){
+        if (i == 0){ continue }
+        let sliced = this.timeSeries.slice(Math.max(0, i - this.movingAverageWindowLen), i)
+        let sliced_close = sliced.map(x => x['close'])
+        let ave = sliced_close.sum() / sliced_close.length
+        rst.push(ave)
+      }
+      return rst
+    },
+    standardDeviationTimeseries: function () {
+      let rst = []
+      for (let i in this.timeSeries){
+        if (i == 0){ continue }
+        let sliced = this.timeSeries.slice(Math.max(0, i - this.movingAverageWindowLen), i)
+        let sliced_close = sliced.map(x => x['close'])
+        let sd = sliced_close.standardDeviation()
+        rst.push(sd)
+      }
+      console.log(rst)
+      return rst
+    },
     gChartDataArray: function() {
       let rst = []
+      let ma = this.movingAverageTimeseries
+      let sd = this.standardDeviationTimeseries
       for (let i in this.timeSeries){
         let row = this.timeSeries[i]
         let time = new Date(Date.parse(row['time'])).toLocaleString()
-
         if (row['open'] <= row['close']){
-          rst.push([time, row['low'], row['open'], row['close'], row['high']])
+          rst.push([time, row['low'], row['open'], row['close'], row['high'], ma[i], ma[i]-2*sd[i], ma[i]+2*sd[i]])
         } else {
-          rst.push([time, row['high'], row['open'], row['close'], row['low']])
+          rst.push([time, row['high'], row['open'], row['close'], row['low'], ma[i], ma[i]-2*sd[i], ma[i]+2*sd[i]])
         }
       }
+      console.log(rst)
       return rst
     },
     gChartOptions: function () {
       var container = document.getElementsByClassName('chart-container')[0]
-      console.log()
-      console.log(container)
       return {
+               seriesType: "candlesticks",
+               series: {
+                 1: {type: "line"},
+                 2: {type: "line"},
+                 3: {type: "line"}
+               },
                legend: 'none',
                width: container.offsetWidth,
                height: container.offsetHeight,
-               bar: { groupWidth: '90%' },
+               bar: { groupWidth: '75%' },
                fontSize: 12,
+               animation: {
+                 duration: 500,
+                 easing: 'inAndOut',
+                 startup: true
+               },
                candlestick: {
-                 fallingColor: { strokeWidth: 0, stroke: '#16A6B6', fill: '#16A6B6' }, // red
-                 risingColor: { strokeWidth: 0, stroke: '#EE6557', fill: '#EE6557' }   // green
+                 hollowIsRising: true,
+                 fallingColor: { strokeWidth: 2, stroke: '#16A6B6', fill: '#16A6B6' }, // red
+                 risingColor: { strokeWidth: 2, stroke: '#EE6557', fill: '#EE6557' }   // green
                },
                chartArea: {
                  left: 100,
